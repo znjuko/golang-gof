@@ -2,6 +2,7 @@ package observer
 
 import (
 	"math/rand"
+	"sort"
 	"testing"
 	"time"
 
@@ -281,7 +282,13 @@ func Test_ObserverSeveralNotifySuccess(t *testing.T) {
 						}
 
 						for iter := range subs {
-							assert.Equal(t, allEvents, subs[iter].SendEvents(len(allEvents)))
+							currentEvents := subs[iter].SendEvents(len(allEvents))
+
+							sort.Slice(currentEvents, func(i, j int) bool {
+								return currentEvents[i].Message < currentEvents[j].Message
+							})
+
+							assert.Equal(t, allEvents, currentEvents)
 						}
 
 						return nil
