@@ -3,6 +3,7 @@ package observer
 import (
 	"math/rand"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/sync/errgroup"
@@ -13,6 +14,7 @@ const (
 	subscriberNotifySuccessTest      = 4
 	subscriberOldLengthAddNewTest    = 4
 	deletedSubscriberIndex           = 3
+	operationCount                   = 2
 
 	firstMsg  = "message1"
 	secondMsg = "message2"
@@ -28,6 +30,12 @@ var (
 	newEvents = []Event{
 		{Message: thirdMsg},
 		{Message: fourthMsg},
+	}
+	allEvents = []Event{
+		{Message: firstMsg},
+		{Message: fourthMsg},
+		{Message: secondMsg},
+		{Message: thirdMsg},
 	}
 )
 
@@ -218,5 +226,71 @@ func Test_ObserverAddNewSubscriberSuccess(t *testing.T) {
 	)
 
 	err = eg.Wait()
+	assert.NoError(t, err)
+}
+
+func Test_ObserverSeveralNotifySuccess(t *testing.T) {
+	publisher := NewPublisher()
+
+	var subs []Sender
+	for iter := 0; iter < subscriberNotifySuccessTest; iter++ {
+		subs = append(subs, NewSender(rand.Int()))
+
+		publisher.AddSubscriber(subs[iter])
+	}
+
+	endChan := make(chan string, 2)
+
+	eg := errgroup.Group{}
+
+	eg.Go(
+		func() (err error) {
+
+			for iter := range events {
+				publisher.Notify(events[iter])
+			}
+
+			time.Sleep(1 * time.Second)
+			endChan <- ""
+
+			return nil
+		},
+	)
+	eg.Go(
+		func() (err error) {
+
+			for iter := range newEvents {
+				publisher.Notify(newEvents[iter])
+			}
+
+			endChan <- ""
+
+			return nil
+		},
+	)
+	eg.Go(
+		func() (err error) {
+			var data []string
+			for {
+				select {
+				case key := <-endChan:
+					{
+						data = append(data, key)
+						if len(data) != operationCount {
+							return nil
+						}
+
+						for iter := range subs {
+							assert.Equal(t, allEvents, subs[iter].SendEvents(len(allEvents)))
+						}
+
+						return nil
+					}
+				}
+			}
+		},
+	)
+
+	err := eg.Wait()
 	assert.NoError(t, err)
 }
