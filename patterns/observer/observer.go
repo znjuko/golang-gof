@@ -5,6 +5,7 @@ const (
 	EmptyPlace = -1
 )
 
+// Publisher ...
 type Publisher interface {
 	AddSubscriber(subs Subscriber)
 	DeleteSubscriber(subsID int)
