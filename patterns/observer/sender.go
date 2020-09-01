@@ -5,6 +5,7 @@ import "sync"
 // Sender ...
 type Sender interface {
 	SendEvents(eventCount int) (events []Event)
+	GetID() (ID int)
 	Subscriber
 }
 
