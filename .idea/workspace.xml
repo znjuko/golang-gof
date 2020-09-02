@@ -19,9 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cf49142-2748-4d37-8ed4-7eac6d511670" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/patterns/proxy/proxy_test.go" afterDir="false" />
-    </list>
+    <list default="true" id="0cf49142-2748-4d37-8ed4-7eac6d511670" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +37,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1guti4hVf6Az5fJyI60JcZivbBz" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -112,6 +113,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="655" y="354" width="600" height="405" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599073741639">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="655" y="354" width="600" height="405" key="#com.intellij.fileTypes.FileTypeChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1599073741639" />
     <state width="1872" height="275" key="GridCell.Tab.0.bottom" timestamp="1599073456897">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
